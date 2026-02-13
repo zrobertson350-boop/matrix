@@ -14,8 +14,24 @@
   </header>
 
   <input id="searchBox" placeholder="define yourself..." />
-  <p class="search-hint">Type any English word to see a visual breakdown of its definitions.</p>
+  <p class="search-hint">Click any definition card to play a short animated definition video.</p>
   <ul id="results"></ul>
+
+  <div id="definitionShort" class="short-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="shortWord">
+    <div class="short-player">
+      <button id="closeShort" class="close-short" type="button" aria-label="Close definition short">✕</button>
+      <div class="short-video" id="shortVideo">
+        <p class="short-label">Definition Short</p>
+        <h2 id="shortWord"></h2>
+        <p id="shortPart" class="short-part"></p>
+        <p id="shortDefinition" class="short-definition"></p>
+        <p id="shortExample" class="short-example"></p>
+        <div class="short-progress">
+          <span id="shortProgressBar"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

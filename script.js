@@ -1,5 +1,13 @@
 const searchBox = document.getElementById('searchBox');
 const results = document.getElementById('results');
+const definitionShort = document.getElementById('definitionShort');
+const closeShort = document.getElementById('closeShort');
+const shortVideo = document.getElementById('shortVideo');
+const shortWord = document.getElementById('shortWord');
+const shortPart = document.getElementById('shortPart');
+const shortDefinition = document.getElementById('shortDefinition');
+const shortExample = document.getElementById('shortExample');
+const shortProgressBar = document.getElementById('shortProgressBar');
 
 const escapeHtml = (value = '') =>
   value
@@ -8,6 +16,40 @@ const escapeHtml = (value = '') =>
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
+
+const playDefinitionShort = ({ word, partOfSpeech, definition, example }) => {
+  shortWord.textContent = word;
+  shortPart.textContent = partOfSpeech;
+  shortDefinition.textContent = definition;
+  shortExample.textContent = example ? `Example: ${example}` : '';
+
+  definitionShort.classList.remove('hidden');
+
+  shortVideo.classList.remove('play-short');
+  shortProgressBar.classList.remove('play-progress');
+
+  void shortVideo.offsetWidth;
+
+  shortVideo.classList.add('play-short');
+  shortProgressBar.classList.add('play-progress');
+};
+
+const closeDefinitionShort = () => {
+  definitionShort.classList.add('hidden');
+  shortVideo.classList.remove('play-short');
+  shortProgressBar.classList.remove('play-progress');
+};
+
+closeShort.addEventListener('click', closeDefinitionShort);
+definitionShort.addEventListener('click', event => {
+  if (event.target === definitionShort) closeDefinitionShort();
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !definitionShort.classList.contains('hidden')) {
+    closeDefinitionShort();
+  }
+});
 
 searchBox.addEventListener('input', async () => {
   const query = searchBox.value.trim().toLowerCase();
@@ -29,6 +71,8 @@ searchBox.addEventListener('input', async () => {
       meaning.definitions.forEach((def, index) => {
         const li = document.createElement('li');
         li.className = 'definition-card';
+        li.tabIndex = 0;
+        li.role = 'button';
 
         li.innerHTML = `
           <div class="definition-meta">
@@ -38,6 +82,22 @@ searchBox.addEventListener('input', async () => {
           <p class="definition-text">${escapeHtml(def.definition || '')}</p>
           ${def.example ? `<p class="definition-example">“${escapeHtml(def.example)}”</p>` : ''}
         `;
+
+        li.addEventListener('click', () => {
+          playDefinitionShort({
+            word: query,
+            partOfSpeech: meaning.partOfSpeech || 'definition',
+            definition: def.definition || '',
+            example: def.example || ''
+          });
+        });
+
+        li.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            li.click();
+          }
+        });
 
         results.appendChild(li);
       });
