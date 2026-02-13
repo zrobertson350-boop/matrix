@@ -8,10 +8,13 @@
 /* Body styling */
 body {
   font-family: 'Courier New', Courier, monospace;
-  background-color: #000000;
+  background:
+    radial-gradient(circle at top, rgba(40, 167, 69, 0.2), transparent 45%),
+    #000000;
   color: #28a745;
   padding: 20px;
   text-align: center;
+  min-height: 100vh;
 }
 
 /* Header styling */
@@ -21,13 +24,13 @@ header {
   align-items: center;
   background-color: transparent !important;
   padding: 0 !important;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   box-shadow: none !important;
 }
 
 /* Logo styling */
 .logo {
-  width: 100vw;
+  width: min(100vw, 900px);
   height: auto;
   object-fit: contain;
 }
@@ -35,42 +38,76 @@ header {
 /* Search box styling */
 #searchBox {
   width: 80%;
-  max-width: 600px;
+  max-width: 680px;
   padding: 15px 20px;
   font-size: 1.5rem;
   border: 2px solid #28a745;
   border-radius: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   outline-color: #28a745;
   font-family: 'Courier New', Courier, monospace;
-  font-style: normal;
-  font-weight: normal;
-  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.85);
   color: #28a745;
+  box-shadow: 0 0 18px rgba(40, 167, 69, 0.15);
+}
+
+.search-hint {
+  color: #8cffaa;
+  margin-bottom: 24px;
+  opacity: 0.9;
 }
 
 /* Results list */
 #results {
   list-style-type: none;
-  max-width: 600px;
+  max-width: 760px;
   margin: 0 auto;
   padding-left: 0;
   text-align: left;
+  display: grid;
+  gap: 12px;
 }
 
 /* Result item */
 #results li {
-  background-color: #000;
-  padding: 12px 15px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  background: linear-gradient(120deg, rgba(0, 0, 0, 0.95), rgba(5, 40, 12, 0.75));
+  border: 1px solid rgba(40, 167, 69, 0.45);
+  padding: 14px 16px;
+  border-radius: 10px;
   color: #28a745;
+  box-shadow: 0 0 18px rgba(40, 167, 69, 0.16);
+}
+
+.definition-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.part-of-speech {
+  text-transform: uppercase;
+  color: #a4ffbe;
+}
+
+.definition-index {
+  color: #7ddf96;
+}
+
+.definition-text {
+  color: #d2ffde;
+  line-height: 1.45;
+}
+
+.definition-example {
+  margin-top: 8px;
+  color: #9ff8b7;
+  font-style: italic;
 }
 
 /* Hide any h1 */
 h1 {
   display: none;
 }
-
